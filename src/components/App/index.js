@@ -8,9 +8,14 @@ const stageMapping = [Welcome, Quiz, Result];
 
 function App() {
   const [stageIndex, setStageIndex] = useState(0);
+  const [points, setPoints] = useState(0);
 
   const showNextStage = () => {
     setStageIndex(stageIndex + 1);
+  };
+
+  const addPoint = () => {
+    setPoints(points + 1);
   };
 
   const Stage = stageMapping[stageIndex];
@@ -19,7 +24,7 @@ function App() {
     <>
       <GlobalStyle />
       <Wrapper>
-        <Stage showNextStage={showNextStage} />
+        <Stage showNextStage={showNextStage} points={points} addPoint={addPoint} />
       </Wrapper>
     </>
   );

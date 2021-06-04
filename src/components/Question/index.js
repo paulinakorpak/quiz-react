@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import Option from '../Option';
 import { Title, Options } from './styles';
 
-function Question({ question, index }) {
+function Question({ question, index, addPoint }) {
   const [answer, setAnswer] = useState(null);
 
   const options = Object.entries(question.options);
 
   const checkAnswer = (value) => {
     setAnswer(value);
+
+    if (value === question.correctOption) {
+      addPoint();
+    }
   };
 
   return (
@@ -53,4 +57,5 @@ export default Question;
 Question.propTypes = {
   question: PropTypes.objectOf(PropTypes.any).isRequired,
   index: PropTypes.number.isRequired,
+  addPoint: PropTypes.func.isRequired,
 };
