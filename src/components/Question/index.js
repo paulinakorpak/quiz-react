@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Option from '../Option';
 import { Title, Options } from './styles';
 
 function Question({ question, index }) {
+  const [answer, setAnswer] = useState(null);
+
   const options = Object.entries(question.options);
+
+  const checkAnswer = (value) => {
+    setAnswer(value);
+  };
 
   return (
     <>
@@ -15,7 +21,26 @@ function Question({ question, index }) {
             const [value, label] = option;
             const key = `${index}-${value}`;
 
-            return <Option key={key} value={value} label={label} />;
+            let className = '';
+
+            if (answer !== null) {
+              if (value === question.correctOption) {
+                className = 'correct';
+              } else if (value === answer) {
+                className = 'wrong';
+              }
+            }
+
+            return (
+              <Option
+                key={key}
+                value={value}
+                label={label}
+                className={className}
+                disabled={answer !== null}
+                checkAnswer={checkAnswer}
+              />
+            );
           })
         }
       </Options>
